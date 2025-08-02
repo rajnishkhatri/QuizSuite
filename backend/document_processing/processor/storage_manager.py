@@ -137,6 +137,44 @@ class StorageManager:
             logger.info(f"Created new collection: {self.collection_name}")
             return collection
     
+    def clear_collection(self) -> Dict[str, Any]:
+        """
+        Clear the existing collection and create a new one.
+        
+        Returns:
+            Dictionary with operation results
+        """
+        try:
+            # Delete existing collection if it exists
+            try:
+                self.client.delete_collection(self.collection_name)
+                logger.info(f"Deleted existing collection: {self.collection_name}")
+            except Exception:
+                logger.info(f"Collection {self.collection_name} does not exist, creating new one")
+            
+            # Create new collection
+            collection = self.client.create_collection(
+                name=self.collection_name,
+                metadata={"description": "Document chunks with multimodal embeddings"},
+                embedding_function=self.embedding_function
+            )
+            
+            logger.info(f"Created new collection: {self.collection_name}")
+            
+            return {
+                "success": True,
+                "message": f"Collection {self.collection_name} cleared and recreated",
+                "collection_name": self.collection_name
+            }
+            
+        except Exception as e:
+            error_msg = f"Error clearing collection: {e}"
+            logger.error(error_msg)
+            return {
+                "success": False,
+                "error": error_msg
+            }
+    
     def store_chunks(self, embedded_chunks: List[Dict[str, Any]], 
                     document_id: str) -> Dict[str, Any]:
         """

@@ -1,7 +1,7 @@
 """
 Document Processing Graph Builder
 
-Builder pattern for creating document processing graphs with different configurations.
+Builder pattern for creating document processing graphs with integrated pipeline.
 """
 
 import logging
@@ -10,9 +10,12 @@ from pathlib import Path
 
 from langgraph.graph import StateGraph, END
 
-from ..state.ingest_state import IngestNodeState
+from ..state.unified_state import UnifiedPipelineState
 from ..model.config_models import QuizConfig
-from ..node.document_processing_nodes import DocumentProcessingNodes
+from ..node.integrated_pipeline_nodes import (
+    IntegratedIngestNode, IntegratedProcessNode, IntegratedEmbeddingNode,
+    IntegratedStorageNode, IntegratedSummaryNode, create_integrated_pipeline_graph
+)
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +31,6 @@ class DocumentProcessingGraphBuilder:
     def __init__(self):
         """Initialize the graph builder."""
         self.config: Optional[QuizConfig] = None
-        self.nodes: Optional[DocumentProcessingNodes] = None
         self.graph: Optional[StateGraph] = None
         self.custom_nodes: Dict[str, Any] = {}
         self.custom_edges: Dict[str, str] = {}
@@ -66,39 +68,22 @@ class DocumentProcessingGraphBuilder:
         return self
     
     def build(self) -> StateGraph:
-        """Build the document processing graph."""
+        """Build the integrated pipeline graph."""
         if not self.config:
             raise ValueError("Configuration must be set before building graph")
         
-        # Create nodes
-        self.nodes = DocumentProcessingNodes(self.config)
+        logger.info("Building integrated pipeline with advanced features...")
         
-        # Create the graph
-        self.graph = StateGraph(IngestNodeState)
+        # Convert QuizConfig to dict for integrated pipeline
+        config_dict = self.config.model_dump() if hasattr(self.config, 'model_dump') else self.config.dict()
         
-        # Add standard nodes
-        self.graph.add_node("ingest", self.nodes.ingest_documents_node)
-        self.graph.add_node("process", self.nodes.process_documents_node)
-        self.graph.add_node("end", self.nodes.end_node)
+        # Create integrated pipeline graph
+        self.graph = create_integrated_pipeline_graph(config_dict)
         
-        # Add custom nodes
-        for node_name, node_function in self.custom_nodes.items():
-            self.graph.add_node(node_name, node_function)
-        
-        # Set entry point
-        self.graph.set_entry_point("ingest")
-        
-        # Add standard edges
-        self.graph.add_edge("ingest", "process")
-        self.graph.add_edge("process", "end")
-        self.graph.add_edge("end", END)
-        
-        # Add custom edges
-        for from_node, to_node in self.custom_edges.items():
-            self.graph.add_edge(from_node, to_node)
-        
-        logger.info("Document processing graph built successfully")
+        logger.info("Integrated pipeline graph built successfully")
         return self.graph
+    
+    
     
     def build_with_validation(self) -> StateGraph:
         """Build the graph with validation."""
@@ -124,4 +109,38 @@ class DocumentProcessingGraphBuilder:
     def create_compiled_graph_with_validation(self) -> Any:
         """Create and compile the graph with validation."""
         graph = self.build_with_validation()
-        return graph.compile() 
+        return graph.compile()
+    
+    def run_pipeline(self, initial_state: Dict[str, Any] = None) -> Any:
+        """Run the integrated pipeline with UnifiedPipelineState."""
+        if not self.graph:
+            self.build()
+        
+        from ..state.unified_state import UnifiedPipelineState
+        
+        if initial_state is None:
+            initial_state = {}
+        
+        # Create initial state for integrated pipeline
+        state = UnifiedPipelineState(
+            documents=[],
+            total_documents=0,
+            chunks=[],
+            total_chunks=0,
+            embedded_chunks=[],
+            total_embedded=0,
+            storage_info={},
+            collection_stats={},
+            processing_summary={},
+            success=False,
+            error=None,
+            node_name="start",
+            messages=[],
+            errors=[]
+        )
+        
+        # Run the graph (it's already compiled from create_integrated_pipeline_graph)
+        result = self.graph.invoke(state)
+        
+        logger.info("Integrated pipeline execution completed")
+        return result 

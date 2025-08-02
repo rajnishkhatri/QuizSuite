@@ -22,15 +22,16 @@ from .model import (
 
 from .state import (
     BaseState,
-    IngestNodeState,
-    ProcessNodeState,
-    EndNodeState
+    UnifiedPipelineState
 )
 
 from .node import (
-    DocumentProcessingNodes,
-    DocumentProcessingGraph,
-    create_document_processing_graph
+    IntegratedIngestNode,
+    IntegratedProcessNode,
+    IntegratedEmbeddingNode,
+    IntegratedStorageNode,
+    IntegratedSummaryNode,
+    create_integrated_pipeline_graph
 )
 
 from .graph import (
@@ -55,14 +56,15 @@ __all__ = [
     
     # States
     "BaseState",
-    "IngestNodeState",
-    "ProcessNodeState", 
-    "EndNodeState",
+    "UnifiedPipelineState",
     
     # Nodes
-    "DocumentProcessingNodes",
-    "DocumentProcessingGraph",
-    "create_document_processing_graph",
+    "IntegratedIngestNode",
+    "IntegratedProcessNode",
+    "IntegratedEmbeddingNode",
+    "IntegratedStorageNode",
+    "IntegratedSummaryNode",
+    "create_integrated_pipeline_graph",
     
     # Graphs
     "DocumentProcessingGraphBuilder"

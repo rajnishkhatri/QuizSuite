@@ -184,6 +184,7 @@ class IntegratedProcessNode(TraceableNode):
             return state.model_copy(update={
                 'processed_documents': processed_documents,
                 'chunks': all_chunks,
+                'total_chunks': len(all_chunks),
                 'processing_summary': processing_summary,
                 'success': True,
                 'node_name': 'integrated_process_node'
@@ -260,6 +261,7 @@ class IntegratedEmbeddingNode(TraceableNode):
             
             return state.model_copy(update={
                 'embedded_chunks': embedded_chunks,
+                'total_embedded': len(embedded_chunks),
                 'embedding_stats': embedding_stats,
                 'embedding_model': self.embedding_manager.model_name,
                 'success': True,
@@ -314,6 +316,13 @@ class IntegratedStorageNode(TraceableNode):
         logger.info("Starting storage operations")
         
         try:
+            # Clear existing collection to avoid conflicts
+            logger.info("Clearing existing collection to avoid conflicts")
+            storage_manager = self._get_storage_manager()
+            clear_result = storage_manager.clear_collection()
+            if not clear_result.get('success', False):
+                logger.warning(f"Failed to clear collection: {clear_result.get('error', 'Unknown error')}")
+            
             embedded_chunks = state.embedded_chunks
             if not embedded_chunks:
                 logger.warning("No embedded chunks to store")
@@ -337,7 +346,7 @@ class IntegratedStorageNode(TraceableNode):
             # Store chunks for each document
             for doc_id, chunks in document_chunks.items():
                 try:
-                    storage_result = self._get_storage_manager().store_chunks(chunks, doc_id)
+                    storage_result = storage_manager.store_chunks(chunks, doc_id)
                     if storage_result.get('stored_chunks', 0) > 0:
                         stored_chunks.extend(chunks)
                         logger.info(f"Stored {storage_result['stored_chunks']} chunks for document {doc_id}")
@@ -349,10 +358,11 @@ class IntegratedStorageNode(TraceableNode):
                     continue
             
             # Get collection statistics
-            collection_stats = self._get_storage_manager().get_collection_stats()
+            collection_stats = storage_manager.get_collection_stats()
             
             return state.model_copy(update={
                 'stored_chunks': stored_chunks,
+                'total_stored': len(stored_chunks),
                 'collection_stats': collection_stats,
                 'storage_success': len(stored_chunks) > 0,
                 'success': True,
@@ -394,13 +404,13 @@ class IntegratedSummaryNode(TraceableNode):
             # Create comprehensive summary
             final_summary = {
                 'pipeline_success': True,
-                'total_documents_processed': len(state.processed_documents),
-                'total_chunks_created': len(state.chunks),
-                'total_chunks_embedded': len(state.embedded_chunks),
-                'total_chunks_stored': len(state.stored_chunks),
-                'embedding_stats': state.embedding_stats,
-                'storage_stats': state.collection_stats,
-                'processing_summary': state.processing_summary,
+                'total_documents_processed': state.total_documents,
+                'total_chunks_created': state.total_chunks,
+                'total_chunks_embedded': state.total_embedded,
+                'total_chunks_stored': state.total_stored,
+                'embedding_stats': getattr(state, 'embedding_stats', {}),
+                'storage_stats': getattr(state, 'collection_stats', {}),
+                'processing_summary': getattr(state, 'processing_summary', {}),
                 'pipeline_completion_time': time.time()
             }
             
