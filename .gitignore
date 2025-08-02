@@ -1,0 +1,363 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.env.local
+.env.production
+.env.staging
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Project specific
+storage/
+storage/chroma_db_pdf/
+storage/vector_db/
+storage/graph_database/
+storage/TogafD/
+output/
+output_formats/
+*.log
+*.json
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+*.docx
+*.xlsx
+*.csv
+*.pickle
+*.pkl
+*.h5
+*.hdf5
+*.npy
+*.npz
+
+# LangSmith
+.langchain.db
+.langchain.db-journal
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Analysis files
+*_analysis.json
+*_analysis_report.md
+*_summary.md
+*_report.md
+
+# Generated content
+output/
+examples/output/
+tests/output/
+
+# Development and testing files
+test_*.py
+*_test.py
+debug_*.py
+analyze_*.py
+extract_*.py
+show_*.py
+simple_*.py
+final_*.py
+convert_*.py
+create_*.py
+clear_*.py
+run_*.py
+setup_*.py
+
+# Research and development files
+r_&_d/
+
+# Documentation and reports
+*.md
+!README.md
+!CONTRIBUTING.md
+!CHANGELOG.md
+!LICENSE
+
+# Configuration files that might contain sensitive data
+config/*.json
+!config/quiz_config.json
+!config/development.json
+
+# Storage directories
+storage/
+storage/TogafD/
+storage/chroma_db_pdf/
+storage/vector_db/
+storage/graph_database/
+storage/chroma_db_html/
+*.db
+*.sqlite
+*.sqlite3
+*.chroma
+
+# Output directories
+output/
+output_formats/
+output_formats/QuestionBanks/
+output_formats/GenerateQuizes/
+backend/output_formats/GenerateQuizes/
+
+# Log files
+*.log
+document_ingestion.log
+
+# Data files
+*.json
+*.csv
+*.xlsx
+*.pickle
+*.pkl
+
+# Image and media files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+
+# Temporary analysis files
+*_analysis.json
+*_analysis_report.md
+*_summary.md
+*_report.md
+*_summary.md
+
+# Generated reports
+EMBEDDING_ANALYSIS_REPORT.md
+STATE_ANALYSIS_REPORT.md
+CHROMADB_ANALYSIS_REPORT.md
+EMBEDDING_SUMMARY.md
+INTEGRATED_PIPELINE_EXECUTION_SUMMARY.md
+INTEGRATED_EXTRACTION_PIPELINE_SUMMARY.md
+CODE_CHUNK_EXTRACTION_SUMMARY.md
+TABLE_EXTRACTION_SUMMARY.md
+FIGURE_EXTRACTION_SUMMARY.md
+IMAGE_EXTRACTION_SUMMARY.md
+EXTRACTED_IMAGES_SUMMARY.md
+TABLES_AND_FIGURES_SUMMARY.md
+DOCUMENT_INGESTION_SUMMARY.md
+CURRENT_PROCESSING_SUMMARY.md
+CURRENT_PIPELINE_GRAPH.md
+UPDATED_PIPELINE_FLOW.md
+PIPELINE_END_CLARIFICATION.md
+NEW_STATE_DESIGN_SUMMARY.md
+STATE_ANALYSIS_SUMMARY.md
+PIPELINE_STATE_ANALYSIS.md
+VISUALIZATION_UTILITIES_DOCUMENTATION.md
+
+# Pipeline and analysis files
+pipeline_*.md
+CURRENT_*.md
+UPDATED_*.md
+PIPELINE_*.md
+NEW_*.md
+STATE_*.md
+EMBEDDING_*.md
+INTEGRATED_*.md
+CODE_*.md
+TABLE_*.md
+FIGURE_*.md
+IMAGE_*.md
+EXTRACTED_*.md
+TABLES_*.md
+DOCUMENT_*.md
+VISUALIZATION_*.md
+
+# Test and analysis scripts
+test_*.py
+analyze_*.py
+extract_*.py
+debug_*.py
+show_*.py
+simple_*.py
+final_*.py
+convert_*.py
+create_*.py
+clear_*.py
+run_*.py
+setup_*.py
+
+# Data analysis files
+sample_analysis_data.json
+tables_figures_analysis.json
+extracted_images_analysis.json
+final_image_analysis.json
+simple_image_analysis.json
+image_extraction_analysis.json
+
+# Development and setup files
+setup_env.py
+setup.sh
+setup_new_repository.sh
+REPOSITORY_SETUP_GUIDE.md
+
+# Cursor rules file
+.cursorrules
+
+# Pre-commit configuration
+.pre-commit-config.yaml
+
+# Makefile
+Makefile
+
+# pytest configuration
+pytest.ini
+
+# Poetry lock file (keep this for reproducible builds)
+# poetry.lock
+
+# Environment template
+env.template 
