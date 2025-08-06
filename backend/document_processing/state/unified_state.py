@@ -50,28 +50,4 @@ class UnifiedPipelineState(BaseNodeState):
     pipeline_success: bool = Field(default=False, description="Overall pipeline success")
     final_summary: Annotated[Dict[str, Any], dict_merge_reducer] = Field(default_factory=dict, description="Final pipeline summary")
     
-    # Helper methods for data transfer
-    def set_documents(self, documents: List[Dict[str, Any]]) -> None:
-        """Set documents from ingest node."""
-        self.documents = documents
-        self.total_documents = len(documents)
-    
-    def set_chunks(self, chunks: List[Dict[str, Any]]) -> None:
-        """Set chunks from process node."""
-        self.chunks = chunks
-        self.total_chunks = len(chunks)
-    
-    def set_embedded_chunks(self, embedded_chunks: List[Dict[str, Any]]) -> None:
-        """Set embedded chunks from embed node."""
-        self.embedded_chunks = embedded_chunks
-        self.total_embedded = len(embedded_chunks)
-    
-    def set_stored_chunks(self, stored_chunks: List[Dict[str, Any]]) -> None:
-        """Set stored chunks from storage node."""
-        self.stored_chunks = stored_chunks
-        self.total_stored = len(stored_chunks)
-    
-    def set_final_summary(self, summary: Dict[str, Any]) -> None:
-        """Set final pipeline summary."""
-        self.final_summary = summary
-        self.pipeline_success = True 
+ 
